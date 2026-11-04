@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-585be9f0-d6a7-4918-b331-cbdfb74f9943/styles.css">
+<script src="_ds/broadsheet-585be9f0-d6a7-4918-b331-cbdfb74f9943/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<script src="./image-slot.js"></script>
+<title>Tom Hess portfolio · System sheet</title>
+<style>
+body { margin: 0; text-wrap: pretty; }
+a { color: var(--color-accent-700); }
+a:hover { color: var(--color-accent-800); }
+[data-theme="station"] {
+  --color-bg: #eef1f1; --color-surface: #e2e7e8; --color-text: #182226;
+  --color-accent: oklch(0.54 0.095 192); --color-accent-2: oklch(0.6 0.13 62);
+  --color-divider: color-mix(in srgb, #182226 16%, transparent);
+  --color-neutral-100: oklch(0.975 0.004 220); --color-neutral-200: oklch(0.93 0.006 220); --color-neutral-300: oklch(0.87 0.008 220);
+  --color-neutral-400: oklch(0.78 0.01 220); --color-neutral-700: oklch(0.46 0.012 220); --color-neutral-800: oklch(0.37 0.012 220); --color-neutral-900: oklch(0.27 0.012 220);
+  --color-accent-100: oklch(0.97 0.02 192); --color-accent-300: oklch(0.87 0.065 192); --color-accent-600: oklch(0.5 0.09 192);
+  --color-accent-700: oklch(0.44 0.08 192); --color-accent-800: oklch(0.36 0.065 192);
+}
+</style>
+</helmet>
+<div style="max-width:1280px;margin:0 auto;padding:64px clamp(20px, 5vw, 72px) 96px;color:var(--color-text);font-family:var(--font-body);">
+
+  <header style="display:flex;flex-direction:column;gap:16px;margin-bottom:80px;">
+    <span style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);">// Portfolio system sheet · TH-01</span>
+    <h1 style="font-size:clamp(40px, 5vw, 64px);line-height:1.05;letter-spacing:-0.02em;margin:0;max-width:18ch;">Broadsheet, with the console left on.</h1>
+    <p style="font-size:17px;line-height:1.6;max-width:62ch;margin:0;color:color-mix(in srgb, var(--color-text) 82%, transparent);">Tokens, type, components and motion for Tom Hess's single-page portfolio. The page itself is <a href="Portfolio.dc.html">Portfolio.dc.html</a>; everything below is drawn from the same variables.</p>
+    <nav aria-label="Sheet sections" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+      <a href="#mockups" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">01 Mockups</a>
+      <a href="#tokens" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">02 Tokens</a>
+      <a href="#type" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">03 Type</a>
+      <a href="#space" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">04 Space, radii, elevation</a>
+      <a href="#components" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">05 Components</a>
+      <a href="#motion" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">06 Motion</a>
+      <a href="#rationale" class="tag tag-neutral" style="border-radius:999px;padding:5px 13px;text-decoration:none;">07 Rationale</a>
+    </nav>
+  </header>
+
+  <section id="mockups" style="margin-bottom:112px;">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 01 Mockups</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 12px;">Three widths, two palettes</h2>
+    <p style="font-size:15px;max-width:62ch;margin:0 0 40px;color:color-mix(in srgb, var(--color-text) 78%, transparent);">Live renders of the page, cropped to the first screens. Open one to scroll the full length.</p>
+    <sc-for list="{{ mockRows }}" as="row" hint-placeholder-count="2">
+      <div style="margin-bottom:56px;">
+        <h3 style="font-size:20px;margin:0 0 20px;">{{ row.label }}</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;">
+          <sc-for list="{{ row.frames }}" as="m" hint-placeholder-count="3">
+            <figure style="margin:0;display:flex;flex-direction:column;gap:10px;">
+              <div style="width:{{ m.vw }};height:{{ m.vh }};overflow:hidden;border-radius:var(--radius-lg);box-shadow:var(--shadow-md), 0 0 0 1px var(--color-divider);background:var(--color-bg);position:relative;">
+                <iframe src="{{ m.src }}" title="{{ m.title }}" loading="lazy" style="width:{{ m.w }};height:{{ m.h }};border:0;transform:scale({{ m.scale }});transform-origin:0 0;position:absolute;left:0;top:0;pointer-events:none;"></iframe>
+              </div>
+              <figcaption style="display:flex;justify-content:space-between;gap:12px;font-size:12px;margin:0;color:color-mix(in srgb, var(--color-text) 70%, transparent);"><span>{{ m.caption }}</span><a href="{{ m.src }}" target="_blank" rel="noopener">Open</a></figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section id="tokens" style="margin-bottom:112px;">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 02 Tokens</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 12px;">Color roles</h2>
+    <p style="font-size:15px;max-width:66ch;margin:0 0 32px;color:color-mix(in srgb, var(--color-text) 78%, transparent);">Paper is Broadsheet as shipped: cyan as the interactive ink, magenta held back. Station is the alternate: teal against a warm amber spot, the cool and warm pairing the brief asks for, on a cooler sheet. Both are light; the design system carries no dark surfaces. Accent at full strength is reserved for chrome, large numerals and fills; paragraph-size accent text takes the 700 step.</p>
+    <div style="overflow-x:auto;">
+      <table class="table" style="min-width:720px;">
+        <thead><tr><th>Role</th><th>Variable</th><th>Paper</th><th>Station</th><th>Use</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ tokens }}" as="t" hint-placeholder-count="13">
+            <tr>
+              <td style="font-weight:600;">{{ t.role }}</td>
+              <td style="font-size:13px;font-feature-settings:'tnum' 1;">{{ t.v }}</td>
+              <td><span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;"><span style="width:22px;height:22px;border-radius:999px;background:{{ t.paper }};box-shadow:inset 0 0 0 1px var(--color-divider);flex:none;"></span>{{ t.paperLabel }}</span></td>
+              <td><span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;"><span style="width:22px;height:22px;border-radius:999px;background:{{ t.station }};box-shadow:inset 0 0 0 1px var(--color-divider);flex:none;"></span>{{ t.stationLabel }}</span></td>
+              <td style="font-size:13px;color:color-mix(in srgb, var(--color-text) 75%, transparent);">{{ t.use }}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <h3 style="font-size:20px;margin:48px 0 12px;">As CSS custom properties</h3>
+    <p style="font-size:14px;max-width:66ch;margin:0 0 16px;color:color-mix(in srgb, var(--color-text) 75%, transparent);">Paper lives in Broadsheet's <code>:root</code>; Station overrides it on <code>[data-theme="station"]</code>. The toggle writes the choice to localStorage under <code>th-portfolio-theme</code>.</p>
+    <pre style="margin:0;padding:24px;border-radius:var(--radius-lg);background:var(--color-surface);font-family:ui-monospace, 'SF Mono', Menlo, monospace;font-size:12.5px;line-height:1.6;overflow-x:auto;white-space:pre;">{{ cssBlock }}</pre>
+  </section>
+
+  <section id="type" style="margin-bottom:112px;">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 03 Type</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 12px;">One serif, many voices</h2>
+    <p style="font-size:15px;max-width:66ch;margin:0 0 32px;color:color-mix(in srgb, var(--color-text) 78%, transparent);">Source Serif 4 sets everything. The brief's monospace and condensed roles are carried instead by small caps with wide tracking and tabular figures: registry labels, readouts and section codes read as instrument lettering without a second family.</p>
+    <div style="display:flex;flex-direction:column;gap:28px;">
+      <sc-for list="{{ typeScale }}" as="ty" hint-placeholder-count="10">
+        <div style="display:grid;grid-template-columns:minmax(0, 220px) minmax(0, 1fr);gap:8px 32px;align-items:baseline;">
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <span style="font-weight:600;font-size:14px;">{{ ty.name }}</span>
+            <span style="font-size:12px;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ ty.spec }}</span>
+          </div>
+          <span style="font-family:var(--font-heading);font-size:{{ ty.size }};font-weight:{{ ty.weight }};line-height:{{ ty.lh }};letter-spacing:{{ ty.ls }};text-transform:{{ ty.tt }};font-feature-settings:'tnum' 1;color:{{ ty.color }};min-width:0;overflow-wrap:anywhere;">{{ ty.sample }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="space" style="margin-bottom:112px;">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 04 Space, radii, elevation</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 32px;">Air first, boxes rarely</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:48px;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <h3 style="font-size:18px;margin:0;">Spacing</h3>
+        <sc-for list="{{ spaces }}" as="sp" hint-placeholder-count="6">
+          <div style="display:flex;align-items:center;gap:12px;font-size:13px;">
+            <span style="width:110px;font-feature-settings:'tnum' 1;">{{ sp.name }}</span>
+            <span style="height:10px;width:{{ sp.w }};border-radius:999px;background:var(--color-accent);"></span>
+            <span style="color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ sp.val }}</span>
+          </div>
+        </sc-for>
+        <p style="font-size:13px;margin:8px 0 0;color:color-mix(in srgb, var(--color-text) 75%, transparent);">Page gutter clamp(20px, 5vw, 72px). Section rhythm clamp(56px, 7vw, 104px). Content max 1200px.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <h3 style="font-size:18px;margin:0;">Radii</h3>
+        <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;"><span style="width:64px;height:48px;background:var(--color-surface);border-radius:var(--radius-md);"></span>2px · cards, tables</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;"><span style="width:64px;height:48px;background:var(--color-surface);border-radius:var(--radius-lg);"></span>4px · frames, dialog</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;"><span style="width:96px;height:32px;background:var(--color-accent-100);border-radius:999px;"></span>999px · console caps</div>
+        </div>
+        <p style="font-size:13px;margin:0;color:color-mix(in srgb, var(--color-text) 75%, transparent);">Pill caps are the one shape that departs from Broadsheet. They mark anything you press: nav, chips, buttons, status.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <h3 style="font-size:18px;margin:0;">Elevation</h3>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;"><span class="elev-sm" style="width:72px;height:52px;background:var(--color-surface);border-radius:var(--radius-lg);"></span>sm · nav on scroll</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;"><span class="elev-md" style="width:72px;height:52px;background:var(--color-surface);border-radius:var(--radius-lg);"></span>md · card hover</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;"><span class="elev-lg" style="width:72px;height:52px;background:var(--color-surface);border-radius:var(--radius-lg);"></span>lg · lightbox</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="components" style="margin-bottom:112px;">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 05 Components</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 48px;">Component sheet</h2>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Nav bar · resting and condensed</h3>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:56px;">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;padding:22px 24px;background:var(--color-bg);border-radius:var(--radius-lg);box-shadow:inset 0 0 0 1px var(--color-divider);">
+        <span style="display:flex;align-items:baseline;gap:10px;margin-right:auto;"><span style="font-weight:600;font-size:21px;">Tom Hess</span><span style="font-size:11px;letter-spacing:0.12em;color:var(--color-accent-700);">TH-01</span></span>
+        <span style="display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--color-surface);font-size:14px;"><span style="padding:6px 14px;border-radius:999px;">Work</span><span style="padding:6px 14px;border-radius:999px;">How I work</span><span style="padding:6px 14px;border-radius:999px;">Contact</span></span>
+        <span class="seg" style="border-radius:999px;"><span class="seg-opt" style="background:var(--color-accent);color:var(--color-bg);">Paper</span><span class="seg-opt">Station</span></span>
+        <span class="btn btn-secondary" style="border-radius:999px;"><i class="ph-duotone ph-file-pdf" style="font-size:16px;"></i>Resume PDF</span>
+      </div>
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;padding:10px 24px;background:var(--color-bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);">
+        <span style="display:flex;align-items:baseline;gap:10px;margin-right:auto;"><span style="font-weight:600;font-size:18px;">Tom Hess</span><span style="font-size:11px;letter-spacing:0.12em;color:var(--color-accent-700);">TH-01</span></span>
+        <span style="display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--color-surface);font-size:14px;"><span style="padding:6px 14px;border-radius:999px;background:var(--color-accent);color:var(--color-bg);">Work</span><span style="padding:6px 14px;border-radius:999px;">How I work</span><span style="padding:6px 14px;border-radius:999px;">Contact</span></span>
+        <span class="seg" style="border-radius:999px;"><span class="seg-opt" style="background:var(--color-accent);color:var(--color-bg);">Paper</span><span class="seg-opt">Station</span></span>
+        <span class="btn btn-secondary" style="border-radius:999px;"><i class="ph-duotone ph-file-pdf" style="font-size:16px;"></i>Resume PDF</span>
+      </div>
+      <p style="font-size:13px;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Condenses after 24px of scroll: padding 22 to 10px, brand 21 to 18px, sm shadow. Scroll-spy fills the active pill. At 375px the rail drops to its own full-width row.</p>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Elbow frame · desktop and mobile</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:32px;margin-bottom:56px;">
+      <div style="position:relative;height:260px;padding-left:72px;">
+        <div style="position:absolute;left:0;top:0;width:44%;height:120px;border-top:12px solid var(--color-accent);border-left:32px solid var(--color-accent);border-top-left-radius:56px;"></div>
+        <div style="position:absolute;top:0;left:calc(44% + 6px);height:12px;width:44px;border-radius:0 999px 999px 0;background:var(--color-accent-300);"></div>
+        <span style="position:absolute;top:-1px;left:calc(44% + 62px);font-size:11px;line-height:14px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-neutral-700);">// 00 Profile</span>
+        <div style="position:absolute;left:0;top:126px;width:32px;height:60px;background:var(--color-accent-300);"></div>
+        <div style="position:absolute;left:0;top:192px;bottom:0;width:32px;border-radius:0 0 999px 999px;background:var(--color-neutral-300);"></div>
+        <p style="font-size:14px;margin:0;padding-top:48px;max-width:36ch;color:color-mix(in srgb, var(--color-text) 78%, transparent);">Wraps the hero's top-left corner only. 12px top bar, 32px side bar (22px on tablet), 56px outer radius, square-cut segments with 6px gaps, one pill terminal.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:375px;">
+        <div style="display:flex;gap:6px;align-items:center;"><span style="height:8px;flex:1;border-radius:999px;background:var(--color-accent);"></span><span style="height:8px;width:36px;border-radius:999px;background:var(--color-accent-300);"></span></div>
+        <p style="font-size:14px;margin:0;color:color-mix(in srgb, var(--color-text) 78%, transparent);">Below 700px the elbow collapses to a plain capped top bar, so nothing widens the page past 375px.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Buttons · rest, hover, pressed, focus</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:24px;margin-bottom:56px;">
+      <sc-for list="{{ buttons }}" as="b" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <span style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ b.name }}</span>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+            <sc-for list="{{ b.states }}" as="st" hint-placeholder-count="4">
+              <span class="{{ b.cls }}" style="border-radius:999px;font-size:14px;padding:9px 18px;background:{{ st.bg }};transform:{{ st.tf }};outline:{{ st.outline }};outline-offset:2px;box-shadow:{{ st.shadow }};">{{ st.label }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Filter chips · default, hover, pressed, dimmed</h3>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:56px;">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+        <span style="display:inline-flex;gap:7px;font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid var(--color-divider);">Swift<span style="font-size:11px;opacity:0.7;">1</span></span>
+        <span style="display:inline-flex;gap:7px;font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid var(--color-accent);">Kotlin<span style="font-size:11px;opacity:0.7;">1</span></span>
+        <span style="display:inline-flex;gap:7px;font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid var(--color-accent);background:var(--color-accent);color:var(--color-bg);">React<span style="font-size:11px;opacity:0.7;">2</span></span>
+        <span style="display:inline-flex;gap:7px;font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid var(--color-divider);opacity:0.3;filter:grayscale(1);">Flutter<span style="font-size:11px;">1</span></span>
+      </div>
+      <p style="font-size:14px;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Showing 2 of 7 projects that use React · <span style="color:var(--color-accent-700);">Show all</span> · or press Esc</p>
+      <p style="font-size:13px;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Chips are toggle buttons with aria-pressed; the status line is a polite live region. Dimmed applies to non-matching cards, not chips: 30% opacity plus grayscale. Chips inside cards turn accent-100 when they match the active filter.</p>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Stat readout tile</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:48px;margin-bottom:56px;">
+      <div style="display:flex;flex-direction:column;gap:10px;"><span style="font-size:11px;letter-spacing:0.14em;color:var(--color-accent-700);">RD-01</span><span style="font-family:var(--font-heading);font-weight:600;font-size:96px;line-height:0.9;letter-spacing:-0.03em;font-feature-settings:'tnum' 1;color:var(--color-accent-700);">03</span><span style="font-size:15px;">App stores live</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;"><span style="font-size:11px;letter-spacing:0.14em;color:var(--color-accent-700);">RD-02</span><span style="font-family:var(--font-heading);font-weight:600;font-size:96px;line-height:0.9;letter-spacing:-0.03em;font-feature-settings:'tnum' 1;">06</span><span style="font-size:15px;">Merged contributions</span></div>
+      <p style="font-size:13px;max-width:34ch;margin:0;align-self:center;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Zero-padded tabular figures read as an instrument. Counts from 00 once, 1400ms ease-out cubic, when 35% of the row is visible. One figure per row takes the accent.</p>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Device frames</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:24px;margin-bottom:56px;">
+      <sc-for list="{{ frames }}" as="fr" hint-placeholder-count="4">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:10px;">
+          <div style="aspect-ratio:4 / 3;display:flex;align-items:center;justify-content:center;padding:{{ fr.pad }};border-radius:var(--radius-lg);background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
+            <dc-import name="DeviceFrame" kind="{{ fr.kind }}" label="{{ fr.label }}" slot-id="{{ fr.slot }}" style="width:{{ fr.w }};height:{{ fr.h }};display:flex;align-items:center;justify-content:center;" hint-size="88%,70%"></dc-import>
+          </div>
+          <figcaption style="font-size:13px;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ fr.caption }}</figcaption>
+        </figure>
+      </sc-for>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Project card · with screenshot, and diagram in place of one</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:24px;margin-bottom:24px;">
+      <article class="card" style="padding:20px;gap:16px;border-radius:var(--radius-lg);">
+        <div style="position:relative;aspect-ratio:4 / 3;display:flex;align-items:center;justify-content:center;padding:16px;border-radius:var(--radius-lg);background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
+          <dc-import name="DeviceFrame" kind="phone" slot-id="crosscue-shot-1" style="height:100%;display:flex;" hint-size="40%,100%"></dc-import>
+          <span class="btn btn-icon" style="position:absolute;top:10px;right:10px;border-radius:999px;background:var(--color-bg);box-shadow:var(--shadow-sm);color:var(--color-accent-700);"><i class="ph-duotone ph-arrows-out" style="font-size:17px;"></i></span>
+          <span style="position:absolute;left:10px;bottom:8px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-neutral-700);background:var(--color-bg);padding:2px 8px;border-radius:999px;">Fig 02 · 3 views</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:baseline;"><span style="font-size:11px;letter-spacing:0.14em;color:var(--color-accent-700);">PRJ-02</span><span style="font-size:13px;color:color-mix(in srgb, var(--color-text) 70%, transparent);">Flutter crossword app, iOS and Android</span></div>
+        <h4 style="font-size:24px;margin:0;">Crosscue</h4>
+        <p style="margin:0;font-size:15px;">Daily puzzles pulled automatically, with an account-free leaderboard on Cloudflare D1 and Workers.</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;"><span style="font-size:12px;padding:3px 11px;border-radius:999px;background:var(--color-neutral-100);">Flutter</span><span style="font-size:12px;padding:3px 11px;border-radius:999px;background:var(--color-neutral-100);">Cloudflare D1</span><span style="font-size:12px;padding:3px 11px;border-radius:999px;background:var(--color-neutral-100);">Workers</span></div>
+      </article>
+      <article class="card" style="padding:20px;gap:16px;border-radius:var(--radius-lg);transform:translateY(-3px);box-shadow:0 0 0 1px color-mix(in srgb, var(--color-accent) 50%, transparent), var(--shadow-md);">
+        <div style="position:relative;aspect-ratio:4 / 3;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:var(--radius-lg);background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
+          <span style="padding:6px 14px;border-radius:999px;background:var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);font-size:13px;">Tenant billing system</span>
+          <i class="ph-duotone ph-arrow-down" style="color:var(--color-accent-700);"></i>
+          <span style="padding:6px 14px;border-radius:999px;background:var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);font-size:13px;">Vendor platform integration</span>
+          <i class="ph-duotone ph-arrow-down" style="color:var(--color-accent-700);"></i>
+          <span style="padding:6px 14px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:13px;">ERP customizations + RPA</span>
+          <div style="position:absolute;top:0;bottom:0;left:48%;width:22%;background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 22%, transparent) 70%, color-mix(in srgb, var(--color-accent) 70%, transparent) 98%, transparent);"></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:baseline;"><span style="font-size:11px;letter-spacing:0.14em;color:var(--color-accent-700);">PRJ-07</span><span style="font-size:13px;color:color-mix(in srgb, var(--color-text) 70%, transparent);">Enterprise case study · Real estate</span></div>
+        <h4 style="font-size:24px;margin:0;">Tenant Billing Automation</h4>
+        <p style="margin:0;font-size:13px;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Shown in hover state: 3px lift, accent hairline, md shadow, sensor sweep mid-pass.</p>
+      </article>
+    </div>
+    <p style="font-size:13px;max-width:70ch;margin:0 0 56px;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Empty screenshot slots show a "Visual pending" panel inside the device frame rather than a broken image; drop a file on any slot to fill it, and the same slot ids feed the lightbox. The featured case study (PRJ-01, and PRJ-07 at desktop) spans two columns with Problem, Decision and Outcome beside the frame; see the mockups above.</p>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">Lightbox</h3>
+    <div style="margin-bottom:56px;padding:32px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-neutral-900) 50%, transparent);">
+      <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-lg);">
+        <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:11px;letter-spacing:0.14em;color:var(--color-accent-700);">PRJ-03</span><span style="font-weight:600;font-size:20px;flex:1;">CableHop</span><span style="font-size:13px;font-feature-settings:'tnum' 1;">02 / 03</span><span class="btn btn-icon" style="border-radius:999px;"><i class="ph-duotone ph-x" style="font-size:18px;"></i></span></div>
+        <div style="position:relative;height:320px;display:flex;align-items:center;justify-content:center;padding:20px 64px;border-radius:var(--radius-lg);background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);">
+          <dc-import name="DeviceFrame" kind="mac" label="CableHop" slot-id="cablehop-shot-2" style="width:min(100%, 420px);display:flex;" hint-size="420px,280px"></dc-import>
+          <span class="btn btn-icon" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);border-radius:999px;background:var(--color-surface);box-shadow:var(--shadow-sm);"><i class="ph-duotone ph-caret-left" style="font-size:18px;"></i></span>
+          <span class="btn btn-icon" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border-radius:999px;background:var(--color-surface);box-shadow:var(--shadow-sm);"><i class="ph-duotone ph-caret-right" style="font-size:18px;"></i></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;"><span style="flex:1;font-size:15px;">File transfer</span><span style="display:flex;gap:6px;"><span style="width:8px;height:8px;border-radius:999px;background:var(--color-neutral-400);"></span><span style="width:28px;height:8px;border-radius:999px;background:var(--color-accent);"></span><span style="width:8px;height:8px;border-radius:999px;background:var(--color-neutral-400);"></span></span><span style="font-size:12px;color:color-mix(in srgb, var(--color-text) 62%, transparent);">← → to browse · Esc to close</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin:0 0 16px;">How I work tile · Footer</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:48px;align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:300px;">
+        <div style="display:flex;gap:6px;"><span style="height:6px;width:40px;border-radius:999px;background:var(--color-accent);"></span><span style="height:6px;width:14px;border-radius:999px;background:var(--color-accent-300);"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;"><i class="ph-duotone ph-stethoscope" style="font-size:30px;color:var(--color-accent-700);"></i><span style="font-size:11px;letter-spacing:0.14em;color:color-mix(in srgb, var(--color-text) 65%, transparent);">OP-02</span></div>
+        <h4 style="font-size:22px;margin:0;">Diagnose</h4>
+        <p style="margin:0;font-size:15px;line-height:1.6;">Traced a status-monitoring crash-loop to an unrecognized log format and fixed it without loosening strict parsing elsewhere.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <span style="font-weight:600;font-size:48px;line-height:1;letter-spacing:-0.03em;">Let's talk.</span>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;"><span class="btn btn-primary" style="border-radius:999px;padding:9px 18px;font-size:14px;">Email</span><span class="btn btn-secondary" style="border-radius:999px;padding:9px 18px;font-size:14px;">LinkedIn</span><span class="btn btn-secondary" style="border-radius:999px;padding:9px 18px;font-size:14px;">Resume PDF</span></div>
+        <span style="font-size:14px;color:color-mix(in srgb, var(--color-text) 72%, transparent);">Cincinnati, OH · Open to remote and hybrid roles. No phone, street or ZIP.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="motion" style="margin-bottom:112px;">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 06 Motion</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 12px;">Motion spec</h2>
+    <p style="font-size:15px;max-width:66ch;margin:0 0 32px;color:color-mix(in srgb, var(--color-text) 78%, transparent);">Two easings only: standard <code>cubic-bezier(.2,.7,.2,1)</code> for things that move, and <code>ease</code> for color and opacity. Under prefers-reduced-motion every transition collapses to 1ms, the count-up jumps to its final value, and the sweep, pulse and pointer glow are off.</p>
+    <div style="overflow-x:auto;">
+      <table class="table" style="min-width:720px;">
+        <thead><tr><th>Interaction</th><th>Trigger</th><th>Duration</th><th>Easing</th><th>What happens</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ motion }}" as="mo" hint-placeholder-count="10">
+            <tr><td style="font-weight:600;">{{ mo.name }}</td><td style="font-size:13px;">{{ mo.trigger }}</td><td style="font-size:13px;font-feature-settings:'tnum' 1;">{{ mo.dur }}</td><td style="font-size:13px;">{{ mo.ease }}</td><td style="font-size:13px;color:color-mix(in srgb, var(--color-text) 78%, transparent);">{{ mo.what }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="rationale">
+    <span style="display:block;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:12px;">// 07 Rationale</span>
+    <h2 style="font-size:36px;letter-spacing:-0.02em;margin:0 0 24px;">Homage, kept quiet</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:32px 56px;">
+      <p style="margin:0;font-size:15.5px;line-height:1.65;">The base is Broadsheet: one serif, paper ground, hierarchy by scale and air. A first-time visitor sees a calm editorial portfolio, not a themed one, and nothing about the reading experience depends on recognizing a reference.</p>
+      <p style="margin:0;font-size:15.5px;line-height:1.65;">The console cues are structural rather than decorative. The elbow appears once, on the hero corner, and folds to a plain bar on phones. Pill caps mark only what you can press. Registry codes (TH-01, PRJ-02, RD-03, OP-04) and zero-padded readouts give metadata an instrument voice using small caps and tabular figures, with no second typeface.</p>
+      <p style="margin:0;font-size:15.5px;line-height:1.65;">Motion is the last layer: a one-time sensor sweep across each frame, a faint dot field that brightens under the pointer, a slow status pulse. Station adds the warm and cool pairing as an alternate palette. There are no logos, insignia, names or lettering borrowed from any show, and no screen is recreated.</p>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const mk = (theme, w, vw, vh) => {
+      const scale = vw / w;
+      return { src: 'Portfolio.dc.html?theme=' + theme, title: 'Portfolio at ' + w + 'px, ' + theme, w: w + 'px', h: Math.round(vh / scale) + 'px', vw: vw + 'px', vh: vh + 'px', scale: scale.toFixed(4), caption: w + 'px · ' + (w >= 1100 ? 'Desktop' : w >= 700 ? 'Tablet' : 'Mobile') };
+    };
+    const row = (theme, label) => ({ label, frames: [mk(theme, 1440, 576, 1100), mk(theme, 768, 384, 1100), mk(theme, 375, 270, 1100)] });
+    const tokens = [
+      ['Background', '--color-bg', '#f3f2f2', '#eef1f1', 'Page ground'],
+      ['Surface', '--color-surface', '#eae9e9', '#e2e7e8', 'Cards, nav rail, lightbox'],
+      ['Surface raised', '--color-neutral-100', '#f8f4f4', 'oklch(.975 .004 220)', 'Chips in cards; raised with shadow-sm'],
+      ['Hairline', '--color-divider', 'ink 16%', 'ink 16%', 'Frame insets, outlined buttons'],
+      ['Text primary', '--color-text', '#201e1d', '#182226', 'Headings, body'],
+      ['Text secondary', 'text 82%', 'text 82%', 'text 82%', 'Paragraphs in cards'],
+      ['Text muted', 'text 70%', 'text 70%', 'text 70%', 'Labels, meta (5.8:1)'],
+      ['Accent primary', '--color-accent', '#0088b0', 'oklch(.54 .095 192)', 'Fills, elbow, active pill, readout'],
+      ['Accent secondary', '--color-accent-700', '#006786', 'oklch(.44 .08 192)', 'Registry labels, link text, icons'],
+      ['Accent tertiary', '--color-accent-2', '#d6006c', 'oklch(.6 .13 62)', 'Rare spot only'],
+      ['Online', '--color-accent', '#0088b0', 'oklch(.54 .095 192)', 'Status dot on accent-100 pill'],
+      ['Focus ring', '--color-accent', '2px solid, offset 2px', '2px solid, offset 2px', 'All :focus-visible'],
+      ['Chip background', '--color-neutral-100 / --color-accent-100', '#f8f4f4 / #e9f8ff', 'neutral / oklch(.97 .02 192)', 'Default / matching filter']
+    ];
+    const paperVals = { '#f3f2f2':1 };
+    const sw = (v, theme) => {
+      if (v.startsWith('#') || v.startsWith('oklch')) return v.split(' / ')[0].startsWith('oklch(.') ? v.replace('oklch(.', 'oklch(0.').replace(/ \./g, ' 0.') : v.split(' / ')[0];
+      return theme === 'paper' ? (v.includes('16%') ? 'color-mix(in srgb, #201e1d 16%, #f3f2f2)' : v.includes('2px') ? '#0088b0' : 'transparent') : (v.includes('16%') ? 'color-mix(in srgb, #182226 16%, #eef1f1)' : v.includes('2px') ? 'oklch(0.54 0.095 192)' : 'transparent');
+    };
+    const fixO = v => v.startsWith('oklch(.') ? v.replace('oklch(.', 'oklch(0.').replace(/ \./g, ' 0.') : v;
+    const swatch = (v, theme, role) => {
+      if (role === 'Text secondary') return theme === 'paper' ? 'color-mix(in srgb, #201e1d 82%, #f3f2f2)' : 'color-mix(in srgb, #182226 82%, #eef1f1)';
+      if (role === 'Text muted') return theme === 'paper' ? 'color-mix(in srgb, #201e1d 70%, #f3f2f2)' : 'color-mix(in srgb, #182226 70%, #eef1f1)';
+      if (role === 'Chip background') return theme === 'paper' ? '#e9f8ff' : 'oklch(0.97 0.02 192)';
+      if (v.startsWith('#') || v.startsWith('oklch')) return fixO(v);
+      return sw(v, theme);
+    };
+    const css = `:root {                                 /* Paper (Broadsheet) */
+  --color-bg: #f3f2f2;      --color-surface: #eae9e9;
+  --color-text: #201e1d;    --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-accent: #0088b0;  --color-accent-700: #006786;  --color-accent-100: #e9f8ff;
+  --color-accent-2: #d6006c;
+  --color-neutral-100: #f8f4f4;  --color-neutral-300: #d7d3d3;
+  --radius-md: 2px;  --radius-lg: 4px;  --radius-pill: 999px;
+  --space-1: 5px; --space-2: 10px; --space-3: 15px; --space-4: 20px; --space-6: 30px; --space-8: 40px;
+  --ease-move: cubic-bezier(.2,.7,.2,1);  --dur-fast: 160ms;  --dur-base: 220ms;  --dur-slow: 900ms;
+}
+[data-theme="station"] {                 /* Station (alternate) */
+  --color-bg: #eef1f1;      --color-surface: #e2e7e8;
+  --color-text: #182226;    --color-divider: color-mix(in srgb, #182226 16%, transparent);
+  --color-accent: oklch(0.54 0.095 192);      /* teal */
+  --color-accent-700: oklch(0.44 0.08 192);
+  --color-accent-100: oklch(0.97 0.02 192);
+  --color-accent-2: oklch(0.6 0.13 62);       /* amber spot */
+  --color-neutral-100: oklch(0.975 0.004 220);  --color-neutral-300: oklch(0.87 0.008 220);
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation: none !important; }
+}`;
+    const ty = (name, spec, size, weight, lh, ls, sample, tt, color) => ({ name, spec, size, weight, lh, ls, sample, tt: tt || 'none', color: color || 'var(--color-text)' });
+    return {
+      mockRows: [row('paper', 'Paper'), row('station', 'Station')],
+      tokens: tokens.map(([role, v, p, s, use]) => ({ role, v, paperLabel: p, stationLabel: s, use, paper: swatch(p, 'paper', role), station: swatch(s, 'station', role) })),
+      cssBlock: css,
+      typeScale: [
+        ty('Display · hero', '600 · 80 / 46 / 38px · lh 1.06 · -0.02em', 'clamp(38px, 6vw, 80px)', 600, 1.06, '-0.02em', 'Software that ships.'),
+        ty('Display · contact', '600 · 96 / 54 / 48px · lh 1.0 · -0.03em', 'clamp(48px, 7vw, 96px)', 600, 1, '-0.03em', "Let's talk."),
+        ty('Readout numeral', '600 · 96 / 56 / 56px · lh 0.9 · tnum', 'clamp(56px, 6.4vw, 96px)', 600, 0.9, '-0.03em', '07', 'none', 'var(--color-accent-700)'),
+        ty('Section title · h2', '600 · 44 / 30 / 30px · lh 1.1', 'clamp(30px, 3.4vw, 44px)', 600, 1.1, '-0.02em', 'From idea to real users.'),
+        ty('Card title · featured', '600 · 34 / 26 / 26px · lh 1.12', 'clamp(26px, 2.6vw, 34px)', 600, 1.12, '-0.015em', 'Retirement Planner'),
+        ty('Card title', '600 · 24px all widths · lh 1.12', '24px', 600, 1.12, '-0.015em', 'Conduit for Android'),
+        ty('Lead', '400 · 19 / 16 / 16px · lh 1.6', 'clamp(16px, 1.4vw, 19px)', 400, 1.6, '0', 'Software engineer and engineering leader with two Director-level roles.'),
+        ty('Body', '400 · 15 to 15.5px · lh 1.55', '15.5px', 400, 1.55, '0', 'Monte Carlo in a Web Worker, validated inputs, parity tests.'),
+        ty('Meta', '400 · 13 to 14px · lh 1.4 · text 70%', '13px', 400, 1.4, '0', 'Cincinnati, OH · Open to remote and hybrid roles.', 'none', 'color-mix(in srgb, var(--color-text) 70%, transparent)'),
+        ty('Registry / section code', '400 · 11 to 13px · caps · 0.12 to 0.14em · tnum', '11px', 400, 1.3, '0.14em', 'PRJ-01 · // 02 Selected work', 'uppercase', 'var(--color-accent-700)')
+      ],
+      spaces: [['--space-1', '5px'], ['--space-2', '10px'], ['--space-3', '15px'], ['--space-4', '20px'], ['--space-6', '30px'], ['--space-8', '40px']].map(([name, val]) => ({ name, val, w: val })),
+      buttons: [
+        { name: 'Primary', cls: 'btn btn-primary', states: [
+          { label: 'Rest', bg: 'var(--color-accent)', tf: 'none', outline: 'none', shadow: 'none' },
+          { label: 'Hover', bg: 'var(--color-accent-600)', tf: 'none', outline: 'none', shadow: 'none' },
+          { label: 'Pressed', bg: 'var(--color-accent-700)', tf: 'scale(0.96)', outline: 'none', shadow: '0 0 0 6px color-mix(in srgb, var(--color-accent) 18%, transparent)' },
+          { label: 'Focus', bg: 'var(--color-accent)', tf: 'none', outline: '2px solid var(--color-accent)', shadow: 'none' }] },
+        { name: 'Secondary', cls: 'btn btn-secondary', states: [
+          { label: 'Rest', bg: 'transparent', tf: 'none', outline: 'none', shadow: 'none' },
+          { label: 'Hover', bg: 'color-mix(in srgb, var(--color-text) 7%, transparent)', tf: 'none', outline: 'none', shadow: 'none' },
+          { label: 'Pressed', bg: 'color-mix(in srgb, var(--color-text) 14%, transparent)', tf: 'scale(0.96)', outline: 'none', shadow: 'none' },
+          { label: 'Focus', bg: 'transparent', tf: 'none', outline: '2px solid var(--color-accent)', shadow: 'none' }] },
+        { name: 'Ghost', cls: 'btn btn-ghost', states: [
+          { label: 'Rest', bg: 'transparent', tf: 'none', outline: 'none', shadow: 'none' },
+          { label: 'Hover', bg: 'color-mix(in srgb, var(--color-accent) 10%, transparent)', tf: 'none', outline: 'none', shadow: 'none' },
+          { label: 'Pressed', bg: 'color-mix(in srgb, var(--color-accent) 18%, transparent)', tf: 'scale(0.96)', outline: 'none', shadow: 'none' },
+          { label: 'Focus', bg: 'transparent', tf: 'none', outline: '2px solid var(--color-accent)', shadow: 'none' }] }
+      ],
+      frames: [
+        { kind: 'browser', label: 'retirement-planner', slot: 'planner-shot-1', w: '100%', h: 'auto', pad: '7%', caption: 'Browser · web apps' },
+        { kind: 'phone', label: '', slot: 'conduit-shot-1', w: 'auto', h: '100%', pad: '16px', caption: 'Phone · iOS and Android' },
+        { kind: 'mac', label: 'FMDV', slot: 'fmdv-shot-1', w: '100%', h: 'auto', pad: '7%', caption: 'macOS window · native Mac apps' },
+        { kind: 'desktop', label: 'Wealthfolio', slot: 'wealthfolio-shot-1', w: '100%', h: 'auto', pad: '7%', caption: 'Desktop window · cross-platform apps' }
+      ],
+      motion: [
+        ['Theme switch', 'Click Paper / Station', '300ms', 'ease', 'Ground and inks cross-fade; choice saved to localStorage, URL ?theme= overrides'],
+        ['Nav condense', 'Scroll past 24px', '200ms', 'ease', 'Padding and brand size shrink, sm shadow fades in'],
+        ['Scroll-spy', 'Section top crosses 40% of viewport', '200ms', 'ease', 'Active pill fills with accent; aria-current set'],
+        ['Stat count-up', '35% of readout row visible, once', '1400ms', 'ease-out cubic', 'Each figure counts from 00 to its value'],
+        ['Chip filter', 'Click chip, Esc or Show all', '280ms', 'ease', 'Non-matching cards fade to 30% and grayscale; status line announces count'],
+        ['Card hover', 'Pointer enter', '220ms', 'cubic-bezier(.2,.7,.2,1)', 'Lift 3px, accent hairline, md shadow'],
+        ['Sensor sweep', 'First pointer enter per card', '900ms', 'cubic-bezier(.4,0,.2,1)', 'An accent band crosses the frame once and never repeats'],
+        ['Hero glow', 'Pointer move, fine pointers only', 'Live', 'none', 'Accent dots appear in a 200px radius under the pointer'],
+        ['Button press', 'Active', '120ms', 'ease', 'Scale to 0.96; primary adds a 6px accent pulse ring'],
+        ['Status pulse', 'Always', '2400ms loop', 'cubic-bezier(0,0,.2,1)', 'Ring expands from the online dot and fades'],
+        ['Lightbox', 'Open from frame button; arrows, dots, Esc', 'Instant', 'none', 'Focus moves to close, Tab is trapped, focus returns to the opener']
+      ].map(([name, trigger, dur, ease, what]) => ({ name, trigger, dur, ease, what }))
+    };
+  }
+}
+</script>
+</body>
+</html>

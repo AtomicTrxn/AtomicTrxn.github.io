@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-585be9f0-d6a7-4918-b331-cbdfb74f9943/styles.css">
+<script src="_ds/broadsheet-585be9f0-d6a7-4918-b331-cbdfb74f9943/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<script src="./image-slot.js"></script>
+</helmet>
+<sc-if value="{{ isPhone }}" hint-placeholder-val="{{ false }}">
+  <div style="height:100%;max-height:100%;aspect-ratio:9 / 19;width:calc(100cqh * 9 / 19);margin:0 auto;max-width:100%;background:var(--color-neutral-900);border-radius:14% / 6.6%;padding:4%;box-shadow:var(--shadow-md);position:relative;box-sizing:border-box;">
+    <div style="position:relative;width:100%;height:100%;border-radius:11% / 5.2%;overflow:hidden;background:var(--color-bg);">
+      <image-slot id="{{ slotId }}" shape="rect" placeholder="{{ placeholder }}" src="{{ src }}" fit="{{ fit }}"></image-slot>
+      <span style="position:absolute;top:2.4%;left:50%;transform:translateX(-50%);width:30%;height:3.2%;border-radius:999px;background:var(--color-neutral-900);pointer-events:none;"></span>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ isWindow }}" hint-placeholder-val="{{ true }}">
+  <div style="width:100%;background:var(--color-bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm), 0 0 0 1px var(--color-divider);overflow:hidden;">
+    <sc-if value="{{ isBrowser }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:6px;height:26px;padding:0 10px;background:var(--color-neutral-200);">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--color-neutral-400);flex:none;"></span>
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--color-neutral-400);flex:none;"></span>
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--color-neutral-400);flex:none;"></span>
+        <span style="flex:1;min-width:0;max-width:62%;margin:0 auto;height:15px;border-radius:999px;background:var(--color-bg);font-size:10px;line-height:15px;text-align:center;color:var(--color-neutral-700);letter-spacing:0.03em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 8px;">{{ label }}</span>
+        <span style="width:33px;flex:none;"></span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMac }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative;display:flex;align-items:center;gap:6px;height:24px;padding:0 10px;background:var(--color-neutral-200);">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-400);flex:none;"></span>
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-400);flex:none;"></span>
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-400);flex:none;"></span>
+        <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:600;color:var(--color-neutral-800);white-space:nowrap;">{{ label }}</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:8px;height:24px;padding:0 4px 0 10px;background:var(--color-neutral-200);">
+        <span style="width:9px;height:9px;border-radius:2px;background:var(--color-accent-500);flex:none;"></span>
+        <span style="font-size:10.5px;font-weight:600;color:var(--color-neutral-800);white-space:nowrap;flex:1;">{{ label }}</span>
+        <i class="ph-duotone ph-minus" style="font-size:11px;color:var(--color-neutral-600);padding:0 5px;" aria-hidden="true"></i>
+        <i class="ph-duotone ph-square" style="font-size:10px;color:var(--color-neutral-600);padding:0 5px;" aria-hidden="true"></i>
+        <i class="ph-duotone ph-x" style="font-size:11px;color:var(--color-neutral-600);padding:0 5px;" aria-hidden="true"></i>
+      </div>
+    </sc-if>
+    <div style="position:relative;aspect-ratio:16 / 10;">
+      <image-slot id="{{ slotId }}" shape="rect" placeholder="{{ placeholder }}" src="{{ src }}" fit="{{ fit }}"></image-slot>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:300},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;browser&quot;,&quot;mac&quot;,&quot;desktop&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;browser&quot;,&quot;tsType&quot;:&quot;'browser'|'mac'|'desktop'|'phone'&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;retirement-planner&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;frame-demo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Visual pending · drop a screenshot&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;fit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cover&quot;,&quot;contain&quot;],&quot;default&quot;:&quot;cover&quot;,&quot;tsType&quot;:&quot;'cover'|'contain'&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const k = this.props.kind ?? 'browser';
+    return {
+      isPhone: k === 'phone',
+      isWindow: k !== 'phone',
+      isBrowser: k === 'browser',
+      isMac: k === 'mac',
+      isDesktop: k === 'desktop',
+      label: this.props.label ?? '',
+      slotId: this.props.slotId ?? 'frame-demo',
+      placeholder: this.props.placeholder ?? 'Visual pending · drop a screenshot',
+      src: this.props.src ?? '',
+      fit: this.props.fit ?? 'cover'
+    };
+  }
+}
+</script>
+</body>
+</html>
