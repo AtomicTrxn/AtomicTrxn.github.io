@@ -267,6 +267,8 @@ a:hover { color: var(--color-accent-800); }
     </footer>
   </main>
 
+  <a href="#top" class="btn" onClick="{{ toTop }}" aria-label="Back to top" aria-hidden="{{ topHidden }}" tabindex="{{ topTab }}" style="position:fixed;right:clamp(16px, 2.4vw, 32px);bottom:clamp(16px, 2.4vw, 32px);z-index:40;width:48px;height:48px;padding:0;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:var(--color-accent);color:var(--color-bg);box-shadow:var(--shadow-md);text-decoration:none;opacity:{{ topOpacity }};transform:{{ topTransform }};pointer-events:{{ topPointer }};transition:opacity 220ms ease, transform 220ms cubic-bezier(.2,.7,.2,1), background-color 160ms ease;" style-hover="background:var(--color-accent-700);" style-active="transform:scale(0.92);"><i class="ph-duotone ph-arrow-up" style="font-size:22px;" aria-hidden="true"></i></a>
+
   <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
     <div class="dialog-backdrop" onClick="{{ lbBackdrop }}" style="z-index:50;padding:clamp(12px, 3vw, 40px);">
       <div ref="{{ lbRef }}" role="dialog" aria-modal="true" aria-labelledby="lb-title" style="width:min(1040px, 100%);max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:16px;padding:clamp(14px, 2vw, 24px);border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-lg);">
@@ -403,7 +405,7 @@ const HOW = [
 const pad = n => String(n).padStart(2, '0');
 
 class Component extends DCLogic {
-  state = { theme: null, w: typeof window !== 'undefined' ? window.innerWidth : 1440, scrolled: false, active: null, filter: null, counted: false, swept: {}, lb: null };
+  state = { theme: null, w: typeof window !== 'undefined' ? window.innerWidth : 1440, scrolled: false, showTop: false, active: null, filter: null, counted: false, swept: {}, lb: null };
   rootRef = React.createRef(); heroRef = React.createRef(); glowRef = React.createRef(); statsRef = React.createRef();
   workRef = React.createRef(); howRef = React.createRef(); contactRef = React.createRef(); lbRef = React.createRef(); lbCloseRef = React.createRef();
   statEls = [];
@@ -420,12 +422,13 @@ class Component extends DCLogic {
     this.onScroll = () => {
       const y = scrollY || document.documentElement.scrollTop || 0;
       const scrolled = y > 24;
+      const showTop = y > Math.min(600, innerHeight * 0.8);
       let active = null;
       if (y > 0) {
         [['work', this.workRef], ['how', this.howRef], ['contact', this.contactRef]].forEach(([id, r]) => { if (r.current && r.current.getBoundingClientRect().top < innerHeight * 0.4) active = id; });
         if (innerHeight + y >= document.documentElement.scrollHeight - 4) active = 'contact';
       }
-      if (scrolled !== this.state.scrolled || active !== this.state.active) this.setState({ scrolled, active });
+      if (scrolled !== this.state.scrolled || active !== this.state.active || showTop !== this.state.showTop) this.setState({ scrolled, active, showTop });
     };
     addEventListener('scroll', this.onScroll, { passive: true }); this.onScroll();
     this.onKey = e => this.handleKey(e); addEventListener('keydown', this.onKey);
@@ -571,6 +574,8 @@ class Component extends DCLogic {
       workRef: this.workRef, howRef: this.howRef, contactRef: this.contactRef, lbRef: this.lbRef, lbCloseRef: this.lbCloseRef,
       navPad: s.scrolled ? '10px' : '22px', brandSize: s.scrolled ? '18px' : '21px',
       navShadow: s.scrolled ? 'var(--shadow-sm)' : 'none',
+      toTop: (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: this.rm ? 'auto' : 'smooth' }); },
+      topOpacity: s.showTop && !s.lb ? 1 : 0, topTransform: s.showTop && !s.lb ? 'none' : 'translateY(12px)', topPointer: s.showTop && !s.lb ? 'auto' : 'none', topHidden: s.showTop && !s.lb ? 'false' : 'true', topTab: s.showTop && !s.lb ? '0' : '-1',
       railBg: framing ? 'var(--color-surface)' : 'transparent',
       railOrder: bp === 'sm' ? 5 : 0, railWidth: bp === 'sm' ? '100%' : 'auto',
       navLinks: [['work', 'Work'], ['how', 'How I work'], ['contact', 'Contact']].map(([id, label]) => ({
