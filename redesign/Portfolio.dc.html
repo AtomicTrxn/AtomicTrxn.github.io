@@ -130,7 +130,7 @@ a:hover { color: var(--color-accent-800); }
         </sc-if>
       </div>
 
-      <div style="display:grid;grid-template-columns:{{ workCols }};gap:clamp(16px, 2vw, 28px);align-items:start;">
+      <div style="display:grid;grid-template-columns:{{ workCols }};gap:clamp(16px, 2vw, 28px);align-items:stretch;">
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="7">
           <sc-if value="{{ p.isHeader }}" hint-placeholder-val="{{ false }}">
             <div style="grid-column:1 / -1;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;padding:{{ p.headPad }} 0 4px;border-top:1px solid var(--color-divider);">
@@ -139,8 +139,8 @@ a:hover { color: var(--color-accent-800); }
             </div>
           </sc-if>
           <sc-if value="{{ p.isCard }}" hint-placeholder-val="{{ true }}">
-          <article class="card" aria-labelledby="{{ p.titleId }}" data-match="{{ p.matchAttr }}" onMouseEnter="{{ p.onEnter }}" style="grid-column:{{ p.span }};display:grid;grid-template-columns:{{ p.cols }};gap:clamp(18px, 2vw, 32px);padding:clamp(16px, 1.6vw, 24px);border-radius:var(--radius-lg);position:relative;opacity:{{ p.opacity }};filter:{{ p.filter }};transition:transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, opacity 280ms ease, filter 280ms ease;" style-hover="transform:translateY(-3px);box-shadow:0 0 0 1px color-mix(in srgb, var(--color-accent) 50%, transparent), var(--shadow-md);">
-            <div style="order:{{ p.stageOrder }};position:relative;container-type:{{ p.ctype }};aspect-ratio:{{ p.stageAspect }};border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:{{ p.stagePad }};background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
+          <article class="card" aria-labelledby="{{ p.titleId }}" data-match="{{ p.matchAttr }}" onMouseEnter="{{ p.onEnter }}" style="grid-column:{{ p.span }};grid-row:span 2;display:grid;grid-template-columns:{{ p.cols }};grid-template-rows:{{ p.rows }};gap:clamp(18px, 2vw, 32px);padding:clamp(16px, 1.6vw, 24px);border-radius:var(--radius-lg);position:relative;opacity:{{ p.opacity }};filter:{{ p.filter }};transition:transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, opacity 280ms ease, filter 280ms ease;" style-hover="transform:translateY(-3px);box-shadow:0 0 0 1px color-mix(in srgb, var(--color-accent) 50%, transparent), var(--shadow-md);">
+            <div style="order:{{ p.stageOrder }};grid-row:{{ p.childRow }};align-self:{{ p.stageAlign }};position:relative;container-type:{{ p.ctype }};aspect-ratio:{{ p.stageAspect }};border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:{{ p.stagePad }};background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
               <sc-if value="{{ p.hasShots }}" hint-placeholder-val="{{ true }}">
                 <dc-import name="DeviceFrame" kind="{{ p.frame }}" label="{{ p.host }}" slot-id="{{ p.slot0 }}" src="{{ p.src0 }}" fit="{{ p.fit }}" placeholder="{{ p.placeholder }}" style="width:{{ p.mountW }};height:{{ p.mountH }};aspect-ratio:{{ p.mountAR }};display:flex;align-items:center;justify-content:center;" hint-size="88%,70%"></dc-import>
                 <sc-if value="{{ p.hasGallery }}" hint-placeholder-val="{{ true }}">
@@ -172,7 +172,7 @@ a:hover { color: var(--color-accent-800); }
               <div aria-hidden="true" style="position:absolute;top:0;bottom:0;left:{{ p.sweepLeft }};width:22%;pointer-events:none;background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 22%, transparent) 70%, color-mix(in srgb, var(--color-accent) 70%, transparent) 98%, transparent);transition:{{ p.sweepTransition }};"></div>
             </div>
 
-            <div style="display:flex;flex-direction:column;gap:14px;min-width:0;">
+            <div style="grid-row:{{ p.childRow }};display:flex;flex-direction:column;gap:14px;min-width:0;">
               <div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;">
                 <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-feature-settings:'tnum' 1;color:var(--color-accent-700);">{{ p.reg }}</span>
                 <span style="font-size:13px;color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ p.type }}</span>
@@ -509,6 +509,7 @@ class Component extends DCLogic {
         span: wide ? 'span 2' : 'auto',
         cols: wide ? 'minmax(0, 1fr) minmax(0, 1.2fr)' : 'minmax(0, 1fr)',
         stageOrder: wide ? 2 : 0,
+        childRow: wide ? '1 / -1' : 'auto',
         ctype: p.frame === 'diagram' ? 'normal' : 'size',
         stageAspect: p.frame === 'diagram' ? 'auto' : wide ? '16 / 11' : '4 / 3',
         stagePad: isPhone ? '16px' : p.frame === 'diagram' ? '28px 16px 40px' : '7%',
@@ -540,7 +541,22 @@ class Component extends DCLogic {
     const projects = [];
     GROUPS.forEach(([g, title, sub], gi) => {
       projects.push({ isHeader: true, isCard: false, title, sub, titleId: 'grp-' + g, headPad: gi === 0 ? '4px' : '28px' });
-      cards.filter(c => c.group === g).forEach(c => projects.push(c));
+      const nCols = bp === 'lg' ? 3 : bp === 'md' ? 2 : 1;
+      const rowsOf = []; let col = 0;
+      cards.filter(c => c.group === g).forEach(c => {
+        const w = c.span === 'span 2' ? 2 : 1;
+        if (col + w > nCols || !rowsOf.length) { rowsOf.push([]); col = 0; }
+        rowsOf[rowsOf.length - 1].push(c); col += w;
+      });
+      rowsOf.forEach(row => {
+        const featRow = row.some(c => c.span === 'span 2');
+        row.forEach(c => {
+          const wide = c.span === 'span 2';
+          c.rows = featRow ? (wide ? 'auto auto' : 'auto 1fr') : 'subgrid';
+          c.stageAlign = featRow ? 'start' : 'stretch';
+          projects.push(c);
+        });
+      });
     });
 
     const lbP = s.lb ? PROJECTS.find(p => p.id === s.lb.pid) : null;
