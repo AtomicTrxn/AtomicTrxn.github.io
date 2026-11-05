@@ -130,17 +130,16 @@ a:hover { color: var(--color-accent-800); }
         </sc-if>
       </div>
 
-      <div style="display:grid;grid-template-columns:{{ workCols }};gap:clamp(16px, 2vw, 28px);align-items:stretch;">
-        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="7">
-          <sc-if value="{{ p.isHeader }}" hint-placeholder-val="{{ false }}">
-            <div style="grid-column:1 / -1;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;padding:{{ p.headPad }} 0 4px;border-top:1px solid var(--color-divider);">
-              <h3 id="{{ p.titleId }}" style="margin:0;font-size:clamp(20px, 2vw, 26px);line-height:1.2;letter-spacing:-0.01em;">{{ p.title }}</h3>
-              <span style="font-size:14px;color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ p.sub }}</span>
-            </div>
-          </sc-if>
-          <sc-if value="{{ p.isCard }}" hint-placeholder-val="{{ true }}">
-          <article class="card" aria-labelledby="{{ p.titleId }}" data-match="{{ p.matchAttr }}" onMouseEnter="{{ p.onEnter }}" style="grid-column:{{ p.span }};grid-row:span 2;display:grid;grid-template-columns:{{ p.cols }};grid-template-rows:{{ p.rows }};gap:clamp(18px, 2vw, 32px);padding:clamp(16px, 1.6vw, 24px);border-radius:var(--radius-lg);position:relative;opacity:{{ p.opacity }};filter:{{ p.filter }};transition:transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, opacity 280ms ease, filter 280ms ease;" style-hover="transform:translateY(-3px);box-shadow:0 0 0 1px color-mix(in srgb, var(--color-accent) 50%, transparent), var(--shadow-md);">
-            <div style="order:{{ p.stageOrder }};grid-row:{{ p.childRow }};align-self:{{ p.stageAlign }};position:relative;container-type:{{ p.ctype }};aspect-ratio:{{ p.stageAspect }};border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:{{ p.stagePad }};background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
+      <div style="display:flex;flex-direction:column;gap:clamp(16px, 2vw, 28px);">
+        <sc-for list="{{ groups }}" as="gr" hint-placeholder-count="2">
+          <div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;padding:{{ gr.headPad }} 0 4px;border-top:1px solid var(--color-divider);">
+            <h3 id="{{ gr.titleId }}" style="margin:0;font-size:clamp(20px, 2vw, 26px);line-height:1.2;letter-spacing:-0.01em;">{{ gr.title }}</h3>
+            <span style="font-size:14px;color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ gr.sub }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ workCols }};gap:clamp(16px, 2vw, 28px);grid-auto-flow:row dense;grid-auto-rows:{{ workRows }};">
+        <sc-for list="{{ gr.cards }}" as="p" hint-placeholder-count="7">
+          <article class="card" aria-labelledby="{{ p.titleId }}" data-match="{{ p.matchAttr }}" onMouseEnter="{{ p.onEnter }}" style="grid-column:{{ p.span }};grid-row:{{ p.rowSpan }};display:grid;grid-template-columns:{{ p.cols }};grid-template-rows:{{ p.rows }};min-height:0;gap:clamp(18px, 2vw, 32px);padding:clamp(16px, 1.6vw, 24px);border-radius:var(--radius-lg);position:relative;opacity:{{ p.opacity }};filter:{{ p.filter }};transition:transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, opacity 280ms ease, filter 280ms ease;" style-hover="transform:translateY(-3px);box-shadow:0 0 0 1px color-mix(in srgb, var(--color-accent) 50%, transparent), var(--shadow-md);">
+            <div style="order:{{ p.stageOrder }};min-height:0;position:relative;container-type:{{ p.ctype }};aspect-ratio:{{ p.stageAspect }};border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:{{ p.stagePad }};background:radial-gradient(circle, color-mix(in srgb, var(--color-text) 11%, transparent) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--color-bg);box-shadow:inset 0 0 0 1px var(--color-divider);">
               <sc-if value="{{ p.hasShots }}" hint-placeholder-val="{{ true }}">
                 <dc-import name="DeviceFrame" kind="{{ p.frame }}" label="{{ p.host }}" slot-id="{{ p.slot0 }}" src="{{ p.src0 }}" fit="{{ p.fit }}" placeholder="{{ p.placeholder }}" style="width:{{ p.mountW }};height:{{ p.mountH }};aspect-ratio:{{ p.mountAR }};display:flex;align-items:center;justify-content:center;" hint-size="88%,70%"></dc-import>
                 <sc-if value="{{ p.hasGallery }}" hint-placeholder-val="{{ true }}">
@@ -149,15 +148,15 @@ a:hover { color: var(--color-accent-800); }
                 </sc-if>
               </sc-if>
               <sc-if value="{{ p.isDiagram }}" hint-placeholder-val="{{ false }}">
-                <div role="img" aria-label="{{ p.diagramAria }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;">
+                <div role="img" aria-label="{{ p.diagramAria }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;">
                   <sc-for list="{{ p.steps }}" as="st" hint-placeholder-count="3">
                     <sc-if value="{{ st.arrow }}" hint-placeholder-val="{{ true }}">
                       <i class="ph-duotone ph-arrow-down" style="font-size:16px;color:var(--color-accent-700);" aria-hidden="true"></i>
                     </sc-if>
-                    <span style="padding:7px 16px;border-radius:999px;background:{{ st.bg }};color:{{ st.color }};box-shadow:{{ st.ring }};font-size:13px;text-align:center;max-width:92%;">{{ st.label }}</span>
+                    <span style="padding:5px 14px;border-radius:999px;background:{{ st.bg }};color:{{ st.color }};box-shadow:{{ st.ring }};font-size:13px;text-align:center;max-width:92%;">{{ st.label }}</span>
                   </sc-for>
                   <sc-if value="{{ p.hasMetric }}" hint-placeholder-val="{{ false }}">
-                    <div style="display:flex;align-items:flex-end;gap:20px;margin-top:14px;">
+                    <div style="display:flex;align-items:flex-end;gap:20px;margin-top:10px;">
                       <sc-for list="{{ p.metrics }}" as="m" hint-placeholder-count="2">
                         <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
                           <span style="font-family:var(--font-heading);font-weight:600;font-size:clamp(24px, 2.4vw, 32px);line-height:1;font-feature-settings:'tnum' 1;color:var(--color-accent-700);">{{ m.v }}</span>
@@ -172,7 +171,7 @@ a:hover { color: var(--color-accent-800); }
               <div aria-hidden="true" style="position:absolute;top:0;bottom:0;left:{{ p.sweepLeft }};width:22%;pointer-events:none;background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 22%, transparent) 70%, color-mix(in srgb, var(--color-accent) 70%, transparent) 98%, transparent);transition:{{ p.sweepTransition }};"></div>
             </div>
 
-            <div style="grid-row:{{ p.childRow }};display:flex;flex-direction:column;gap:14px;min-width:0;">
+            <div style="display:flex;flex-direction:column;gap:14px;min-width:0;">
               <div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;">
                 <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-feature-settings:'tnum' 1;color:var(--color-accent-700);">{{ p.reg }}</span>
                 <span style="font-size:13px;color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ p.type }}</span>
@@ -215,7 +214,8 @@ a:hover { color: var(--color-accent-800); }
               </sc-if>
             </div>
           </article>
-          </sc-if>
+        </sc-for>
+          </div>
         </sc-for>
       </div>
     </section>
@@ -386,6 +386,10 @@ const PROJECTS = [
     steps: ['Sensors: IMU, encoders, distance, color', 'Autonomous control code', 'Telemetry-driven debugging'], metrics: [['2x', 'Worlds qualifier'], ['1', 'Control Award']], diagramLabel: 'Coaching focus' }
 ];
 const STATS = [['RD-01', 3, 'App store listings'], ['RD-02', 11, 'Merged pull requests'], ['RD-03', 32, 'Tagged releases'], ['RD-04', 10, 'Languages used']];
+const TILE = { planner: [2, 1], crosscue: [1, 2], llm: [2, 2], aphelion: [2, 1], conduit: [1, 2], memomatic: [2, 1], purser: [2, 1], zephyr: [2, 1], fmdv: [2, 1], ledger: [1, 2], ftc: [2, 1], wealthfolio: [2, 1] };
+const TILE_MD = { ledger: [1, 1] };
+const ORDER = ['planner', 'crosscue', 'cablehop', 'aidlc', 'llm', 'calculators', 'ftcforge', 'aphelion', 'conduit', 'memomatic', 'purser', 'lab', 'roi', 'zephyr', 'fmdv', 'ledger', 'ftc', 'wealthfolio', 'shopwatch'];
+PROJECTS.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
 PROJECTS.forEach((p, i) => { p.reg = 'PRJ-' + String(i + 1).padStart(2, '0'); });
 const HOW = [
   ['ph-flask', 'OP-01', 'Build and test', 'Apps shipped across React, Flutter, Swift with a C engine, Kotlin and Rust. A parity-oracle strategy checks each calculation against hand-computed values.'],
@@ -499,20 +503,23 @@ class Component extends DCLogic {
     const STATUS_TONE = { Live: 1, Running: 1, Released: 1, Merged: 1, Built: 1 };
 
     const cards = PROJECTS.map(p => {
-      const wide = p.featured && (bp === 'lg' || (bp === 'md' && p.id === 'planner'));
+      const [tw, th] = bp === 'sm' ? [1, 1] : ((bp === 'md' && TILE_MD[p.id]) || TILE[p.id] || [1, 1]);
+      const cw = Math.min(tw, bp === 'lg' ? 3 : 2);
+      const wide = cw > 1 && th === 1;
+      const tiled = bp !== 'sm';
       const match = !f || p.tech.includes(f);
       const isPhone = p.frame === 'phone';
       return {
         reg: p.reg, title: p.title, type: p.type, desc: p.desc || '', titleId: 'prj-' + p.id,
         isFeatured: !!p.featured, isRegular: !p.featured,
         pdo: (p.pdo || []).map(([k, v]) => ({ k, v })),
-        span: wide ? 'span 2' : 'auto',
-        cols: wide ? 'minmax(0, 1fr) minmax(0, 1.2fr)' : 'minmax(0, 1fr)',
-        stageOrder: wide ? 2 : 0,
-        childRow: wide ? '1 / -1' : 'auto',
+        span: 'span ' + cw, rowSpan: tiled ? 'span ' + th : 'auto',
+        cols: wide ? (p.frame === 'diagram' ? 'minmax(0, 1fr) minmax(0, 1fr)' : 'minmax(0, 1.6fr) minmax(0, 1fr)') : 'minmax(0, 1fr)',
+        rows: wide || !tiled ? 'auto' : (p.frame === 'diagram' ? 'minmax(max-content, 1fr) auto' : 'minmax(150px, 1fr) auto'),
+        stageOrder: 0,
         ctype: p.frame === 'diagram' ? 'normal' : 'size',
-        stageAspect: p.frame === 'diagram' ? 'auto' : wide ? '16 / 11' : '4 / 3',
-        stagePad: isPhone ? '16px' : p.frame === 'diagram' ? '28px 16px 40px' : '7%',
+        stageAspect: p.frame === 'diagram' || tiled ? 'auto' : '4 / 3',
+        stagePad: isPhone ? '16px' : p.frame === 'diagram' ? '18px 12px 34px' : '6%',
         titleSize: p.featured ? 'clamp(26px, 2.6vw, 34px)' : '24px',
         isHeader: false, isCard: true,
         frame: p.frame, host: p.host || '', hasShots: p.frame !== 'diagram', isDiagram: p.frame === 'diagram',
@@ -525,7 +532,7 @@ class Component extends DCLogic {
         diagramLabel: (p.diagramLabel || 'Diagram'), hasMetric: !!p.metrics, metrics: (p.metrics || []).map(([v, k]) => ({ v, k })),
         hasPosts: !!(p.posts && p.posts.length), posts: (p.posts || []).map(([date, label, href]) => ({ date, label, href })),
         isPrivate: !!p.private, group: p.group,
-        mountW: isPhone ? 'auto' : '100%', mountH: isPhone ? '100%' : 'auto', mountAR: isPhone ? '9 / 19' : 'auto',
+        mountW: isPhone ? 'auto' : 'min(100%, calc((100cqh - 26px) * 1.6))', mountH: isPhone ? '100%' : 'auto', mountAR: isPhone ? '9 / 19' : 'auto',
         figLabel: 'Fig ' + p.reg.slice(4) + ' · ' + (p.shots || []).length + ' views',
         galleryLabel: 'Open ' + p.title + ' screenshots, ' + (p.shots || []).length + ' views',
         openGallery: () => this.openLb(p.id),
@@ -538,26 +545,7 @@ class Component extends DCLogic {
       };
     });
 
-    const projects = [];
-    GROUPS.forEach(([g, title, sub], gi) => {
-      projects.push({ isHeader: true, isCard: false, title, sub, titleId: 'grp-' + g, headPad: gi === 0 ? '4px' : '28px' });
-      const nCols = bp === 'lg' ? 3 : bp === 'md' ? 2 : 1;
-      const rowsOf = []; let col = 0;
-      cards.filter(c => c.group === g).forEach(c => {
-        const w = c.span === 'span 2' ? 2 : 1;
-        if (col + w > nCols || !rowsOf.length) { rowsOf.push([]); col = 0; }
-        rowsOf[rowsOf.length - 1].push(c); col += w;
-      });
-      rowsOf.forEach(row => {
-        const featRow = row.some(c => c.span === 'span 2');
-        row.forEach(c => {
-          const wide = c.span === 'span 2';
-          c.rows = featRow ? (wide ? 'auto auto' : 'auto 1fr') : 'subgrid';
-          c.stageAlign = featRow ? 'start' : 'stretch';
-          projects.push(c);
-        });
-      });
-    });
+    const groups = GROUPS.map(([g, title, sub], gi) => ({ title, sub, titleId: 'grp-' + g, headPad: gi === 0 ? '4px' : '28px', cards: cards.filter(c => c.group === g) }));
 
     const lbP = s.lb ? PROJECTS.find(p => p.id === s.lb.pid) : null;
     const lb = lbP ? {
@@ -604,8 +592,9 @@ class Component extends DCLogic {
       }),
       statusText: f ? 'Showing ' + nMatch + ' of ' + PROJECTS.length + ' projects that use ' + f : 'Showing all ' + PROJECTS.length + ' projects. Pick a technology to filter.',
       filterActive: !!f, showAll: () => this.setState({ filter: null }),
+      workRows: bp === 'sm' ? 'auto' : bp === 'lg' ? 'minmax(630px, auto)' : 'minmax(600px, auto)',
       workCols: bp === 'lg' ? 'repeat(3, minmax(0, 1fr))' : bp === 'md' ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)',
-      projects,
+      groups,
       howCols: bp === 'lg' ? 'repeat(4, minmax(0, 1fr))' : bp === 'md' ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)',
       how: HOW.map(([icon, reg, title, body, link]) => ({ icon, reg, title, body, hasLink: !!link })),
       lbOpen: !!lbP, lb,
